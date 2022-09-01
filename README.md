@@ -22,5 +22,5 @@ module "altinitycloud_connect" {
 
 ## Legal
 
-All code, unless specified otherwise, is licensed under the [Apache-2.0](LICENSE) license.
+All code, unless specified otherwise, is licensed under the [Apache-2.0](LICENSE) license.  
 Copyright (c) 2022 Altinity, Inc.
