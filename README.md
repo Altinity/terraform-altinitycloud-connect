@@ -1,4 +1,4 @@
-# terraform-altinity-cloud-connect
+# terraform-altinitycloud-connect
 
 Terraform module for connecting your Kubernetes clusters to [Altinity.Cloud](https://altinity.cloud/anywhere).  
 If you're looking for way to manage ClickHouse clusters via Terraform,
