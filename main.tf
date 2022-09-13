@@ -48,8 +48,9 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
           }
         }
         container {
-          name  = "cloud-connect"
-          image = "${var.docker_registry != "" ? "${var.docker_registry}/" : ""}altinity/cloud-connect:${local.release}"
+          name              = "cloud-connect"
+          image             = "${var.docker_registry != "" ? "${var.docker_registry}/" : ""}altinity/cloud-connect:${local.version}"
+          image_pull_policy = local.version == "latest-master" ? "Always" : "IfNotPresent"
           args = [
             "-i",
             "/etc/cloud-connect/cloud-connect.pem",

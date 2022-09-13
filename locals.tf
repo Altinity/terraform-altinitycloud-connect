@@ -1,3 +1,3 @@
 locals {
-  release = trimspace(file("${path.module}/version"))
+  version = trimspace(file("${path.module}/version"))
 }
