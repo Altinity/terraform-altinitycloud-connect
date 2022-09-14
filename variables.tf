@@ -10,8 +10,19 @@ EOT
   default     = ""
 }
 
-variable "docker_registry" {
+variable "url" {
+  type    = string
+  default = "https://anywhere.altinity.cloud"
+}
+
+variable "image" {
   type        = string
-  description = "Custom Docker Registry to pull altinity/cloud-connect from (e.g. localhost:5000)"
+  description = "Custom Docker image (defaults to altinity/cloud-connect:$version)"
+  default     = ""
+}
+
+variable "image_pull_policy" {
+  type        = string
+  description = "Image pull policy as described in https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy (defaults to \"IfNotPresent\" except when referred to latest master (in which case it's \"Always\"))"
   default     = ""
 }
