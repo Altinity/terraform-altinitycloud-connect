@@ -12,7 +12,7 @@ provider "kubernetes" {
 }
 
 module "altinitycloud_connect" {
-  source  = "altinity/altinitycloud/connect"
+  source  = "altinity/connect/altinitycloud"
   version = "0.5.0"
   # cloud-connect.pem is produced by `altinitycloud-connect login`.
   # See https://github.com/altinity/altinitycloud-connect for details.
