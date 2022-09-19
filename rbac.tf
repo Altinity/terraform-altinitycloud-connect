@@ -125,7 +125,7 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_node_view" {
 
 resource "kubernetes_cluster_role_binding_v1" "altinitycloud_node_metrics_view" {
   metadata {
-    name = "altinity-cloud:node-view"
+    name = "altinity-cloud:node-metrics-view"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
