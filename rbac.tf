@@ -72,7 +72,7 @@ resource "kubernetes_cluster_role_v1" "altinitycloud_cloud_connect" {
 resource "kubernetes_service_account_v1" "altinitycloud_cloud_connect" {
   metadata {
     name      = "cloud-connect"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
 }
 
@@ -109,17 +109,17 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_node_view" {
   subject {
     kind      = "ServiceAccount"
     name      = "edge-proxy"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
   subject {
     kind      = "ServiceAccount"
     name      = "prometheus"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
   subject {
     kind      = "ServiceAccount"
     name      = "kube-state-metrics"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
 }
 
@@ -135,7 +135,7 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_node_metrics_view" 
   subject {
     kind      = "ServiceAccount"
     name      = "prometheus"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
 }
 
@@ -172,14 +172,14 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_persistent_volume_v
   subject {
     kind      = "ServiceAccount"
     name      = "kube-state-metrics"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
 }
 
 resource "kubernetes_role_binding_v1" "altinitycloud_cloud_connect_system" {
   metadata {
     name      = "altinity-cloud:cloud-connect"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -196,7 +196,7 @@ resource "kubernetes_role_binding_v1" "altinitycloud_cloud_connect_system" {
 resource "kubernetes_role_binding_v1" "altinitycloud_cloud_connect_managed_clickhouse" {
   metadata {
     name      = "altinity-cloud:cloud-connect"
-    namespace = kubernetes_namespace_v1.altinitycloud_managed_clickhouse.metadata[0].name
+    namespace = local.altinitycloud_managed_clickhouse_namespace_id
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
