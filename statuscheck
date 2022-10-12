@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+url=https://anywhere.altinity.cloud
+cert=
+wait=0
+interval=15
+insecure=0
+connected=0
+
+usage() {
+  cat >&2 <<EOF
+Usage: $(basename "${0}") [flags]
+
+Flags:
+  --url       <string> $url by default.
+  --cert      <string> /path/to/cloud-connect.pem
+                       (produced by https://github.com/Altinity/altinitycloud-connect)
+                       (required)
+  --wait      <number> Max time to wait ($wait (seconds) by default (0 means not retries)).
+  --interval  <number> Time to wait between retries ($interval (seconds) by default).
+  --connected          Check if environment is connected instead of ready.
+  --insecure           Skip TLS verification.
+EOF
+  exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --url=*)
+      url=$(echo "$1" | cut -d= -f2)
+      ;;
+    --url)
+      url="$2"
+      shift
+      ;;
+    --cert=*)
+      cert=$(echo "$1" | cut -d= -f2)
+      ;;
+    --cert)
+      cert="$2"
+      shift
+      ;;
+    --wait=*)
+      wait=$(echo "$1" | cut -d= -f2)
+      ;;
+    --wait)
+      wait="$2"
+      shift
+      ;;
+    --interval=*)
+      interval=$(echo "$1" | cut -d= -f2)
+      ;;
+    --interval)
+      interval="$2"
+      shift
+      ;;
+    --connected)
+      connected=1
+      ;;
+    --insecure)
+      insecure=1
+      ;;
+    -h|--help)
+      usage
+      ;;
+    -*)
+      echo "Error: unknown flag $1" >&2
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift
+done
+
+if [[ "$cert" == "" ]]; then
+  echo "Error: --cert required" >&2
+  echo >&2
+  usage
+  exit 1
+fi
+
+# pre-read --cert to make the script accept --cert=<(...)
+cert_pre_read=$(cat "$cert")
+
+curlopts=(-sSL --max-time 30)
+if [[ "$insecure" == "1" ]]; then
+  curlopts+=(--insecure)
+fi
+urlqp=
+if [[ "$connected" == "1" ]]; then
+  urlqp=?connected
+fi
+
+# SECONDS is a built-in variable; reset to 0 to simplify code
+SECONDS=0
+
+while true; do
+    response=$(
+      curl "${curlopts[@]}" \
+        --cert <(echo "$cert_pre_read") --key <(echo "$cert_pre_read") \
+        "${url}/statuscheck${urlqp}" || true
+    )
+    if [[ "$response" == "OK" ]]; then
+      exit 0
+    fi
+    if [[ "$response" == "" ]]; then
+      response="(empty)"
+    fi
+    if [[ $SECONDS -gt $wait ]]; then
+      echo "GET ${url}: $response" >&2
+      break
+    fi
+    echo "GET ${url}: $response (retry in ${interval}s)" >&2
+    sleep $interval
+done
+
+exit 28 # timeout

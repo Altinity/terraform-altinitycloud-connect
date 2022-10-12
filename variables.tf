@@ -26,3 +26,21 @@ variable "image_pull_policy" {
   description = "Image pull policy as described in https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy (defaults to \"IfNotPresent\" except when referred to latest master (in which case it's \"Always\"))"
   default     = ""
 }
+
+variable "wait_connected" {
+  type        = bool
+  description = "Wait for environment to be connected"
+  default     = false
+}
+
+variable "wait_ready" {
+  type        = bool
+  description = "Wait for environment to be ready (to launch ClickHouse clusters & accept traffic) (implies connected)"
+  default     = false
+}
+
+variable "wait_timeout_in_seconds" {
+  type        = number
+  description = "Max time to wait in seconds (45min by default)"
+  default     = 2700
+}
