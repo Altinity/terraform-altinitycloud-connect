@@ -3,7 +3,7 @@ resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
   count = var.pem != "" ? 1 : 0
   metadata {
     name      = "cloud-connect"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
     labels = {
       app = "cloud-connect"
     }
@@ -16,7 +16,7 @@ resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
 resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
   metadata {
     name      = "cloud-connect"
-    namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
+    namespace = local.altinitycloud_system_namespace_id
     labels = {
       app = "cloud-connect"
     }

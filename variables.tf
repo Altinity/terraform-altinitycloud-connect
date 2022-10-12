@@ -26,3 +26,16 @@ variable "image_pull_policy" {
   description = "Image pull policy as described in https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy (defaults to \"IfNotPresent\" except when referred to latest master (in which case it's \"Always\"))"
   default     = ""
 }
+
+variable "create_namespaces" {
+  type        = bool
+  default     = true
+  description = <<EOT
+By default, the module will create two namespaces: `altinity-cloud-system` and
+`altinity-cloud-managed-clickhouse`.  Set this to `false` if you need to pre-create
+those namespaces in your calling module (e.g. to add annotations or non-altinity
+pods).  If you do this, you _must_ create both namespaces, and you will need to
+manually use the `depends_on` meta-variable to make this module not instantiate
+until after they are created.
+EOT
+}
