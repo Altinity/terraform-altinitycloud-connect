@@ -130,7 +130,7 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_node_metrics_view" 
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role_v1.altinitycloud_node_view.metadata[0].name
+    name      = kubernetes_cluster_role_v1.altinitycloud_node_metrics_view.metadata[0].name
   }
   subject {
     kind      = "ServiceAccount"
@@ -146,7 +146,7 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_storage_class_view"
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role_v1.altinitycloud_node_view.metadata[0].name
+    name      = kubernetes_cluster_role_v1.altinitycloud_storage_class_view.metadata[0].name
   }
   subject {
     kind      = "ServiceAccount"
@@ -162,7 +162,7 @@ resource "kubernetes_cluster_role_binding_v1" "altinitycloud_persistent_volume_v
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role_v1.altinitycloud_node_view.metadata[0].name
+    name      = kubernetes_cluster_role_v1.altinitycloud_persistent_volume_view.metadata[0].name
   }
   subject {
     kind      = "ServiceAccount"
