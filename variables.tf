@@ -44,3 +44,9 @@ variable "wait_timeout_in_seconds" {
   description = "Max time to wait in seconds (45min by default)"
   default     = 2700
 }
+
+variable "namespace_annotations" {
+  type        = map(string)
+  description = "Map of annotations for `altinity-cloud-*` namespaces"
+  default     = {}
+}

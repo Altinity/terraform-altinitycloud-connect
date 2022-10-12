@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `wait_connected` & `wait_ready` variables that can be used to wait for the 
 environment to be connected/ready (both false by default).
-- `clickhouse_namespace` namespace output.
+- `namespace_annotations` variable for attaching extra annotations to 
+`altinity-cloud-*` namespaces (empty by default).
+- `clickhouse_namespace` output.
 
 ### Fixed
 - `altinity-cloud:node-metrics-view`, `altinity-cloud:storage-class-view` & 
