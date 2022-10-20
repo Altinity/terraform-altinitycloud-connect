@@ -95,7 +95,7 @@ resource "null_resource" "wait" {
     hash = sha256(join("\n", [var.url, var.pem])),
   }
   provisioner "local-exec" {
-    command     = "${path.module}/statuscheck --url=${var.url} --cert=<(echo $STATUSCHECK_CERT_BASE64 | base64 -d) --wait=${var.wait_timeout_in_seconds} ${var.wait_connected ? "--connected" : ""}"
+    command     = "${path.module}/statuscheck --url=${var.url} --cert=<(echo $STATUSCHECK_CERT_BASE64 | base64 -d) --wait=${var.wait_timeout_in_seconds} ${!var.wait_ready ? "--connected" : ""}"
     interpreter = ["/usr/bin/env", "bash", "-c"]
     environment = {
       STATUSCHECK_CERT_BASE64 = base64encode(var.pem)
