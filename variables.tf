@@ -50,3 +50,9 @@ variable "namespace_annotations" {
   description = "Map of annotations for `altinity-cloud-*` namespaces"
   default     = {}
 }
+
+variable "namespace_labels" {
+  type        = map(string)
+  description = "Map of labels for `altinity-cloud-*` namespaces"
+  default     = {}
+}
