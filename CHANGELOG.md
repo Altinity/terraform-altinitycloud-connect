@@ -4,17 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [0.10.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.3...v0.10.0)
+## [0.21.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.20.0...v0.21.0)
 
 ### Added
 - `namespace_labels` to allow support for disabling namespace wide configuration like `istio`
 
-### [0.9.3](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.0...v0.9.3)
+## [0.20.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.3...v0.20.0)
+
+### Added
+- TLS cert auto-renewal/hot-reload.
+- Support for disconnecting Kubernetes clusters from Altinity.Cloud via
+`altinitycloud-connect kubernetes-disconnnect | kubectl delete -f -`.
+- `/debug/vars` introspection endpoint.
+- AWS/GCP provisioning capabilities.
+
+## [0.9.3](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.0...v0.9.3)
 
 ### Fixed
 - `wait_connected` taking precedence over `wait_ready` when both are set.
 
-### [0.9.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.6.0...v0.9.0)
+## [0.9.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.6.0...v0.9.0)
 
 ### Added
 - `wait_connected` & `wait_ready` variables that can be used to wait for the 
