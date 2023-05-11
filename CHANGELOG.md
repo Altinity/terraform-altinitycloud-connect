@@ -9,12 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `namespace_labels` to allow support for disabling namespace wide configuration like `istio`
 
-### [0.9.3](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.3...v0.9.0)
+### [0.9.3](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.0...v0.9.3)
 
 ### Fixed
 - `wait_connected` taking precedence over `wait_ready` when both are set.
 
-### [0.9.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.9.0...v0.6.0)
+### [0.9.0](https://github.com/Altinity/terraform-altinitycloud-connect/compare/v0.6.0...v0.9.0)
 
 ### Added
 - `wait_connected` & `wait_ready` variables that can be used to wait for the 
