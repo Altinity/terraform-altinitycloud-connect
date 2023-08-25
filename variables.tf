@@ -56,3 +56,29 @@ variable "namespace_labels" {
   description = "Map of labels for `altinity-cloud-*` namespaces"
   default     = {}
 }
+
+variable "ca_crt" {
+  type        = string
+  description = <<EOT
+The certificate authority of dev environment. This is only mean for local development, should be omitted in production.
+EOT
+  default     = ""
+}
+
+variable "host_alias_ip" {
+  type        = string
+  description = "The IP address of the host alias. This is only mean for local development, should be omitted in production."
+  default     = ""
+}
+
+variable "host_alias_name" {
+  type        = string
+  description = "The hostname of the host alias. This is only mean for local development, should be omitted in production."
+  default     = ""
+}
+
+variable "dual_tcp_udp" {
+  type        = bool
+  description = "Enable dual TCP/UDP mode. This is only mean for local development, should be omitted in production."
+  default     = false
+}

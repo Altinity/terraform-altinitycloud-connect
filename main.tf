@@ -1,6 +1,4 @@
 resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
-  # https://www.terraform.io/language/state/sensitive-data
-  count = var.pem != "" ? 1 : 0
   metadata {
     name      = "cloud-connect"
     namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
@@ -8,9 +6,11 @@ resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
       app = "cloud-connect"
     }
   }
-  data = {
+
+  data = var.pem != "" ? {
     "cloud-connect.pem" = var.pem
-  }
+    "ca.crt" = var.ca_crt
+  } : {}
 }
 
 resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
@@ -41,6 +41,14 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
       }
       spec {
         service_account_name = "cloud-connect"
+        dynamic "host_aliases" {
+          for_each = var.host_alias_ip != "" ? [1] : []
+          content {
+            ip = var.host_alias_ip
+            hostnames = [host_alias_name]
+          }
+        }
+
         volume {
           name = "secret"
           secret {
@@ -51,14 +59,20 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
           name              = "cloud-connect"
           image             = var.image != "" ? var.image : "altinity/cloud-connect:${local.version}"
           image_pull_policy = var.image_pull_policy != "" ? var.image_pull_policy : local.version == "latest-master" ? "Always" : "IfNotPresent"
-          args = [
-            "-u",
-            var.url,
-            "-i",
-            "/etc/cloud-connect/cloud-connect.pem",
-            "--debug-addr",
-            ":7777"
-          ]
+
+          args = concat(
+            [
+              "-u",
+              var.url,
+              "-i",
+              "/etc/cloud-connect/cloud-connect.pem",
+              "--debug-addr",
+              ":7777",
+              "--dual-tcp-udp",
+              var.dual_tcp_udp,
+            ],
+            var.ca_crt != "" ? ["--ca-crt", "/etc/cloud-connect/ca.crt"] : []
+          )
           volume_mount {
             name       = "secret"
             mount_path = "/etc/cloud-connect"
