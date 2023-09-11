@@ -45,7 +45,7 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
           for_each = var.host_alias_ip != "" ? [1] : []
           content {
             ip = var.host_alias_ip
-            hostnames = [host_alias_name]
+            hostnames = [var.host_alias_name]
           }
         }
 
@@ -68,11 +68,14 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
               "/etc/cloud-connect/cloud-connect.pem",
               "--debug-addr",
               ":7777",
+              "--dual-tcp-udp",
+              "--ca-crt",
+              "/etc/cloud-connect/ca.crt"
             ],
             var.ca_crt != "" ? ["--ca-crt", "/etc/cloud-connect/ca.crt"] : [],
-            var.dual_tcp_udp != "" ? ["--dual-tcp-udp"] : []
-
+            var.dual_tcp_udp ? ["--dual-tcp-udp"] : []
           )
+
           volume_mount {
             name       = "secret"
             mount_path = "/etc/cloud-connect"
