@@ -68,10 +68,10 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
               "/etc/cloud-connect/cloud-connect.pem",
               "--debug-addr",
               ":7777",
-              "--dual-tcp-udp",
-              var.dual_tcp_udp,
             ],
-            var.ca_crt != "" ? ["--ca-crt", "/etc/cloud-connect/ca.crt"] : []
+            var.ca_crt != "" ? ["--ca-crt", "/etc/cloud-connect/ca.crt"] : [],
+            var.dual_tcp_udp != "" ? ["--dual-tcp-udp"] : []
+
           )
           volume_mount {
             name       = "secret"
