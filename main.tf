@@ -1,6 +1,6 @@
 resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
   # https://www.terraform.io/language/state/sensitive-data
-  count = var.pem != "" ? 1 : 0
+  count = 1 // kept for backward-compatibility
   metadata {
     name      = "cloud-connect"
     namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
