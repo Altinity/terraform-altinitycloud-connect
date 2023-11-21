@@ -87,6 +87,10 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
       }
     }
   }
+  depends_on = [
+    // delay deployment until secret is created
+    kubernetes_secret_v1.altinitycloud_cloud_connect
+  ]
 }
 
 resource "null_resource" "wait" {
