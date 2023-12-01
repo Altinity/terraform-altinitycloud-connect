@@ -1,6 +1,6 @@
 resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
   # https://www.terraform.io/language/state/sensitive-data
-  count = var.pem != "" ? 1 : 0
+  count = var.use_external_secret ? 0 : 1
   metadata {
     name      = "cloud-connect"
     namespace = kubernetes_namespace_v1.altinitycloud_system.metadata[0].name
@@ -87,6 +87,11 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
       }
     }
   }
+  wait_for_rollout = !var.use_external_secret
+  depends_on = [
+    // delay deployment until secret is created
+    kubernetes_secret_v1.altinitycloud_cloud_connect
+  ]
 }
 
 resource "null_resource" "wait" {
