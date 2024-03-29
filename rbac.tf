@@ -64,6 +64,7 @@ resource "kubernetes_cluster_role_v1" "altinitycloud_cloud_connect" {
       "clickhouseinstallations.clickhouse.altinity.com",
       "clickhouseinstallationtemplates.clickhouse.altinity.com",
       "clickhouseoperatorconfigurations.clickhouse.altinity.com",
+      "clickhousekeeperinstallations.clickhouse-keeper.altinity.com",
     ]
     verbs = ["*"]
   }
