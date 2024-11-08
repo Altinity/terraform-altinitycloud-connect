@@ -72,18 +72,6 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
             period_seconds        = 5
           }
         }
-        affinity {
-          pod_anti_affinity {
-            required_during_scheduling_ignored_during_execution {
-              label_selector {
-                match_labels = {
-                  app = "cloud-connect"
-                }
-              }
-              topology_key = "topology.kubernetes.io/zone"
-            }
-          }
-        }
       }
     }
   }
