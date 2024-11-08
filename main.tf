@@ -1,3 +1,14 @@
+locals {
+  default_toleration = [
+    {
+      key      = "altinity.cloud"
+      value    = "anywhere"
+      effect   = "NoSchedule"
+      operator = "Equal"
+    }
+  ]
+}
+
 resource "kubernetes_secret_v1" "altinitycloud_cloud_connect" {
   # https://www.terraform.io/language/state/sensitive-data
   count = var.use_external_secret ? 0 : 1
@@ -70,6 +81,16 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
             }
             initial_delay_seconds = 5
             period_seconds        = 5
+          }
+        }
+
+        dynamic "toleration" {
+          for_each = concat(local.default_toleration, var.tolerations)
+          content {
+            key      = toleration.value.key
+            operator = toleration.value.operator
+            value    = toleration.value.value
+            effect   = toleration.value.effect
           }
         }
       }

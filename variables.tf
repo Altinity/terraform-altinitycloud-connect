@@ -62,3 +62,15 @@ variable "namespace_labels" {
   description = "Map of labels for `altinity-cloud-*` namespaces"
   default     = {}
 }
+
+variable "tolerations" {
+  description = "List of tolerations for the deployment"
+  type = list(object({
+    key                = string
+    operator           = string
+    value              = optional(string)
+    effect             = optional(string)
+    toleration_seconds = optional(number)
+  }))
+  default = []
+}
