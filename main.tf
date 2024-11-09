@@ -1,7 +1,7 @@
 locals {
-  default_toleration = [
+  default_tolerations = [
     {
-      key      = "altinity.cloud"
+      key      = "altinity.cloud/use"
       value    = "anywhere"
       effect   = "NoSchedule"
       operator = "Equal"
@@ -85,7 +85,7 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
         }
 
         dynamic "toleration" {
-          for_each = concat(local.default_toleration, var.tolerations)
+          for_each = concat(local.default_tolerations, var.tolerations)
           content {
             key      = toleration.value.key
             operator = toleration.value.operator
