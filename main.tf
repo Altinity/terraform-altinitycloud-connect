@@ -32,6 +32,7 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
       app = "cloud-connect"
     }
   }
+
   spec {
     replicas               = 1
     revision_history_limit = 3
@@ -83,6 +84,8 @@ resource "kubernetes_deployment_v1" "altinitycloud_cloud_connect" {
             period_seconds        = 5
           }
         }
+
+        node_selector = var.node_selector
 
         dynamic "toleration" {
           for_each = concat(local.default_tolerations, var.tolerations)

@@ -64,7 +64,6 @@ variable "namespace_labels" {
 }
 
 variable "tolerations" {
-  description = "List of tolerations for the deployment"
   type = list(object({
     key                = string
     operator           = string
@@ -72,5 +71,12 @@ variable "tolerations" {
     effect             = optional(string)
     toleration_seconds = optional(number)
   }))
+  description = "List of tolerations for the cloud-connect deployment"
   default = []
+}
+
+variable "node_selector" {
+  type        = map(string)
+  description = "Node selector for the cloud-connect deployment"
+  default     = null
 }
